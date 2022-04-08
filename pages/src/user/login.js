@@ -23,9 +23,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { GoogleLoginButton } from "react-social-login-buttons"
 import { toast } from "react-toastify";
 
-// import { loadUser } from "../../../redux/userAction"
-// import { useDispatch } from "react-redux"
-// import { wrapper } from "../../../redux/store"
+import { loadUser } from "../../../redux/userAction"
+import { useDispatch } from "react-redux"
+import { wrapper } from "../../../redux/store"
 
 
 
@@ -244,6 +244,26 @@ const Login = ({ session }) => {
  
 export default Login;
 
+
+
+// export const getServerSideProps = wrapper.getServerSideProps((store) =>
+//   async ({ req }) => {
+//     const session = await getSession({ req })
+
+//     const cookies = parseCookies()
+//     const user = cookies?.user ? JSON.parse(cookies.user) : session?.user
+//     console.log(user)
+
+//     await store.dispatch(loadUser(user?.email, user))
+
+//     return {
+//       props: {
+//         session,
+//       },
+//     };
+
+//   }
+// );
 
 
 export const getServerSideProps = async(context) => {

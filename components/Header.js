@@ -44,7 +44,7 @@ export default function ButtonAppBar() {
 
 
   useEffect(() => {
-    dispatch(loadUser(user?.email, user))
+    dispatch(loadUser(user.email, user))
   },[])
 
 

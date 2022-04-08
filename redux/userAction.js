@@ -7,6 +7,9 @@ import axios from "axios"
 
 
 export const loadUser = (email, user) => async (dispatch) => {
+  // console.log({email})
+  // console.log({user})
+
   try {
     dispatch({ type: LOAD_USER_REQUEST })
 
@@ -16,10 +19,14 @@ export const loadUser = (email, user) => async (dispatch) => {
       },
     }
 
+
+    let response = '';
+
     if (email) {
       const { data } = await axios.post(`/api/user/profile`, { email }, config)
+      response = data
+      // console.log("data", data)
     }
-
     // const res = await fetch('/api/user/profile', { 
     //   method: 'POST', 
     //   body: JSON.stringify({ email }),
@@ -28,11 +35,12 @@ export const loadUser = (email, user) => async (dispatch) => {
 
     // const data = await res.json();
 
-    // console.log("data", data)
+    
 
     dispatch({
       type: LOAD_USER_SUCCESS,
-      payload: data || user,
+      // payload: data || user,
+      payload: response || user,
     })
   } catch (error) {
     dispatch({

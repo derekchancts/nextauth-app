@@ -37,6 +37,8 @@ const userSchema = mongoose.Schema({
   },
   resetToken: { type: String },
   update: { type: String },
+  validEmail: { type: String, default: "not" },
+  // emailToken: { type: String },
 })
 
 // export default mongoose.models.User || mongoose.model("User", userSchema)
