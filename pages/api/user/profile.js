@@ -10,13 +10,25 @@ export default async function handler(req, res) {
       // const { email } = req.body
       // console.log(email)
 
-      let user = await User.findOne({ email: req.body.email })
+
+      // `object` ("[object Object]") cannot be serialized as JSON. Please only return JSON serializable data types.
+      // const note = await Note.findById(id);
+
+      // `object` ("[object Object]") cannot be serialized as JSON. Please only return JSON serializable data types (if we do not do this)
+      // note._id = note._id.toString();
+
+      let user = await User.findOne({ email: req.body.email }).lean()
+      user._id = user?._id.toString();
       // console.log(user)
 
-      // user.password = '';
+      // user.password = undefined;
+      // console.log(user)
+
       // if (user !== null) {
-        const { _id = null, name, email } = user 
+        // const { _id = null, name, email } = user.toObject()
+        const { _id, name, email } = user
       // }
+
       
       const existingUser = { _id, name, email }
       // console.log(existingUser)

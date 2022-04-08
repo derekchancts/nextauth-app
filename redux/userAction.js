@@ -16,7 +16,9 @@ export const loadUser = (email, user) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post(`/api/user/profile`, { email }, config)
+    if (email) {
+      const { data } = await axios.post(`/api/user/profile`, { email }, config)
+    }
 
     // const res = await fetch('/api/user/profile', { 
     //   method: 'POST', 

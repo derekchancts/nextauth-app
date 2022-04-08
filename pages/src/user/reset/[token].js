@@ -64,7 +64,7 @@ export default function SignIn() {
         config
       )
       toast.success(data.success);
-      router.push('/api/user/login')
+      router.push('/src/user/login');
 
     } catch (error) {
       toast.error(error?.response?.data?.error)
