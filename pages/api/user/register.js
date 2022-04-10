@@ -1,8 +1,9 @@
 // import connectDB from "../../lib/connectDB"
 import User from '../../../model/userModel'
 import bcrypt from 'bcryptjs'
-// import { handleErrors } from '../../utils/HandleErrors'
-
+import jwt from "jsonwebtoken"
+import absoluteUrl from "next-absolute-url"
+import { sendEmail } from "../../../helpers/sendMail"
 // connectDB();
 
 export default async function handler(req, res) {
@@ -29,12 +30,42 @@ export default async function handler(req, res) {
 
         // const newUser =  await User({ email, password: hashedpassword, name: combinedName }).save();
         const newUser =  await User({ email, password: hashedpassword, name: `${firstName} ${lastName}` }).save();
-        return res.status(201).json({ success: 'Signup success' })
-    } catch (err) {
-      console.log(err)
+
+        // console.log(newUser)  
+
+
+
+        // const token = jwt.sign({ _id: newUser._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: process.env.JWT_ACCESS_TIME } )
+        const token = jwt.sign({ _id: newUser._id }, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30d"} )
+
+          // console.log("token1", token)
+
+          newUser.emailToken = token
+          await newUser.save()
+
+          const { origin } = absoluteUrl(req)
+          const link = `${origin}/src/user/email/${token}`
+
+          const message = `<div>Click on the link below to verify your email, if the link is not working then please paste into the browser.</div></br>
+        <div>link:${link}</div>`
+
+          await sendEmail({
+            to: newUser.email,
+            subject: "Email Verification",
+            text: message,
+          })
+
+          return res.status(200).json({
+            success: `Email sent to ${newUser.email}, please check your email`,
+          })
+
+
+        // return res.status(201).json({ success: 'Signup success' })
+    } catch (error) {
+      console.log(error)
       // const errors = handleErrors(err);
       // console.log(errors)
-      return res.status(400).json({ err })
+      return res.status(400).json({ error })
     }
   }
 };

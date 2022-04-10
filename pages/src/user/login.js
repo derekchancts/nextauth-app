@@ -23,7 +23,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
 import { GoogleLoginButton } from "react-social-login-buttons"
 import { toast } from "react-toastify";
 
-import { loadUser } from "../../../redux/userAction"
+import { loadUser, logoutUser } from "../../../redux/userAction"
 import { useDispatch } from "react-redux"
 import { wrapper } from "../../../redux/store"
 
@@ -42,11 +42,11 @@ const Login = ({ session }) => {
   const user = cookies?.user ? JSON.parse(cookies.user) : session?.user ? session.user : "" ;
 
   
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(loadUser(user?.email, user))
-  // },[dispatch, user])
+  useEffect(() => {
+    dispatch(loadUser(user?.email, user))
+  },[dispatch, user])
 
 
 
@@ -101,8 +101,10 @@ const Login = ({ session }) => {
     }
     cookie.remove('token');
     cookie.remove('user');
+    dispatch(() => logoutUser());
+    
     toast.success('Logout success 👌');
-    router.push('/src/user/login');
+    router.push('/src/user/login');  
   };
 
 
@@ -119,6 +121,7 @@ const Login = ({ session }) => {
       <button onClick={() => logoutHandler()}>Sign out</button>
     </>
   }
+
 
   // return 
   //   <>

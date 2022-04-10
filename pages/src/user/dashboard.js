@@ -19,6 +19,7 @@ import {
   Container
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+import CircularProgress from '@mui/material/CircularProgress';
 
 // import { loadUser } from "../../../redux/userAction"
 // import { useDispatch } from "react-redux"
@@ -51,7 +52,25 @@ const Dashboard = () => {
 
 
   if (status !== "authenticated" && !user) {
-    return <h2>Loading...</h2>;
+    // return <h2>Loading...</h2>;
+    return (
+    <>
+      <Box
+        sx={{ 
+          display: "flex" ,
+          width: '95vw' ,
+          height: '90vh' ,
+          // height: '500px',
+          // width: '500px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          // backgroundColor: "lightblue"
+        }}
+      >
+        <CircularProgress size={100}/>
+      </Box>
+    </>
+    )
   };
 
   return (

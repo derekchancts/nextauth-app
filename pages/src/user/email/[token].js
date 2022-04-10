@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import {
   Avatar,
@@ -11,8 +11,8 @@ import {
   Box,
   Typography,
   Container
-} from "@mui/material"
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined"
+} from "@mui/material";
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { useRouter } from "next/router"
 import axios from "axios"
@@ -20,52 +20,33 @@ import { toast } from "react-toastify"
 
 
 
-export default function SignIn() {
+
+export default function EmailConfirm() {
   const router = useRouter()
 
-  const { token } = router.query
 
-  // console.log(token)
+  useEffect(() => {
+    if (router.isReady) {
+      // console.log("useEffect", router.query);
+      const { token } = router.query
+      sendToken(token)
+    }
+  // }, [router.isReady, router.query]);
+  }, [router.isReady]);
 
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const result = new FormData(e.currentTarget)
-    // eslint-disable-next-line no-console
 
+
+  const sendToken = async (token) => {
     try {
-      const password = result.get("password")
-      const conPassword = result.get("conPassword")
-
-
-      if (password.length < 6) {
-        toast.error("password must be at least 6 characters in length" + " 🤯", {
-          // background: '#EE0022'
-        })
-        return
-      }
-
-      if (password !== conPassword) {
-        toast.error("passwords do not match!" + " 🤯")
-        // console.log("passwords do not match")
-        return
-      }
-
-
       const config = {
         headers: {
           "Content-Type": "application/json",
         },
       }
 
-      const { data } = await axios.put(
-        `/api/user/reset/${token}`,
-        { conPassword, password },
-        config
-      );
+      const { data } = await axios.put(`/api/user/email/${token}`, {}, config);
       toast.success(data.success);
       router.push('/src/user/login');
-
     } catch (error) {
       toast.error(error?.response?.data?.error)
     }
@@ -83,21 +64,22 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
+
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
 
           <Typography component="h1" variant="h5">
-            Reset Password
+            Confirm Email
           </Typography>
-
+          
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
-            <TextField
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -117,20 +99,20 @@ export default function SignIn() {
               type="password"
               autoComplete="email"
               autoFocus
-            />
+            /> */}
 
             {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             /> */}
-            <Button
+            {/* <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2, backgroundColor: "secondary.main" }}
             >
               Submit
-            </Button>
+            </Button> */}
             {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

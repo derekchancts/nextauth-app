@@ -17,6 +17,8 @@ export default async function handler(req, res) {
       // `object` ("[object Object]") cannot be serialized as JSON. Please only return JSON serializable data types (if we do not do this)
       // note._id = note._id.toString();
 
+      // The lean option tells Mongoose to skip hydrating the result documents. This makes queries faster and less memory intensive, 
+      // but the result documents are plain old JavaScript objects (POJOs), not Mongoose documents
       let user = await User.findOne({ email: req.body.email }).lean()
       user._id = user?._id.toString();
       // console.log(user)
@@ -26,18 +28,18 @@ export default async function handler(req, res) {
 
       // if (user !== null) {
         // const { _id = null, name, email } = user.toObject()
-        const { _id, name, email } = user
+        const { _id, name, email, validEmail } = user
       // }
 
       
-      const existingUser = { _id, name, email }
+      const existingUser = { _id, name, email, validEmail }
       // console.log(existingUser)
 
       // return res.status(200).send(user)
       return res.status(200).send(existingUser)
     }
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
   }
 }
 

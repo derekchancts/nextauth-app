@@ -20,7 +20,7 @@ export default async function handler (req, res) {
     } else {
       return res.status(401).json({ error: "Invalid credentials" })
     }
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.log(error)
   }
 }

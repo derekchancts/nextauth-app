@@ -2,6 +2,7 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  LOGOUT_USER
 } from "./userTypes"
 import axios from "axios"
 
@@ -51,4 +52,18 @@ export const loadUser = (email, user) => async (dispatch) => {
           : error.message,
     })
   }
+}
+
+
+
+
+
+// export const logoutUser = () => (dispatch) => {
+//   console.log('logoutUser fired')
+//   dispatch({ type: LOGOUT_USER })
+// }
+
+export const logoutUser = () => async (dispatch) => {
+  console.log('logoutUser fired')
+  dispatch({ type: LOGOUT_USER })
 }

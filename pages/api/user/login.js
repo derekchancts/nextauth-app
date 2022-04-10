@@ -41,11 +41,11 @@ export default async function handler(req, res) {
         return res.status(201).json({ success: 'Login success', user: { email, _id, name }, token })
       }
         
-    } catch (err) {
-      // console.log(err)
-      // const errors = handleErrors(err);
+    } catch (error) {
+      // console.log(error)
+      // const errors = handleErrors(error);
       // console.log(errors)
-      return res.status(400).json({ err })
+      return res.status(400).json({ error })
     }
   }
 };

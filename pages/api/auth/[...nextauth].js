@@ -19,4 +19,14 @@ export default NextAuth({
   pages: {
     signIn: "/src/user/login"
   },
+  // callbacks: {
+  //   // async signIn(user, account, profile) { return true },
+
+  //   // The redirect callback is called anytime the user is redirected to a callback URL (e.g. on signin or signout).
+  //   // async redirect(url, baseUrl) { return baseUrl }, 
+  //   async redirect(url, baseUrl) { 
+  //     // return "/src/user/author" 
+  //     return "https://google.com" 
+  //   },
+  // },
 })

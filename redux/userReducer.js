@@ -2,6 +2,7 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAIL,
+  LOGOUT_USER,
 } from "./userTypes"
 
 
@@ -21,6 +22,8 @@ export const profileReducer = (state = Initial_state, action) => {
       return { loading: false, dbUser: action.payload }
     case LOAD_USER_FAIL:
       return { loading: false, error: action.payload }
+    case LOGOUT_USER: 
+      return { state: Initial_state }
     default:
       return state
   }
